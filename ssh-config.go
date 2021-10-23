@@ -8,23 +8,22 @@ import (
 	"path/filepath"
 )
 
-func getFilePath() string {
-	argLength := len(os.Args[1:])
-	returnValue := "null"
+func getFilePath(args []string) (filePath string) {
+	argLength := len(args[1:])
 	if argLength > 0 {
-		returnValue = os.Args[1]
+		filePath = args[1]
 	} else {
 		homedir, err := os.UserHomeDir()
 		if err != nil {
 			log.Fatal( err )
 		}
-		returnValue = filepath.Join(homedir,".ssh","config")
+		filePath = filepath.Join(homedir,".ssh","config")
 	}
-	return returnValue
+	return
 }
 
 func main() {
-	file, err := os.Open(getFilePath())
+	file, err := os.Open(getFilePath(os.Args))
  
 	if err != nil {
 		log.Fatalf("failed opening file: %s", err)
