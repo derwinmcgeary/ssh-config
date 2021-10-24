@@ -9,6 +9,8 @@ import (
 )
 
 func getFilePath(args []string) (filePath string) {
+	// Return the SSH config file path
+	// TODO make this a proper parsed argument thingy
 	argLength := len(args[1:])
 	if argLength > 0 {
 		filePath = args[1]
