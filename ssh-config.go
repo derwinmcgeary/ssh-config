@@ -11,16 +11,20 @@ import (
 	"strings"
 )
 
-func getCommandArgs() (configFile string) {
+func getCommandArgs() (map[string]string) {
+	var arguments = make(map[string]string)
+	var configFile string
 	flag.StringVar(&configFile, "f", "$HOME/.ssh/config", "Specify config file. Default is $HOME/.ssh/config")
 	flag.Parse()
-	return
+	arguments["configFile"] = configFile
+	return arguments
 }
 
-func getFilePath(args []string) (filePath string) {
+func getFilePath() (filePath string) {
 	// Return the SSH config file path
 	// TODO use argument parser
-	filePath = getCommandArgs()
+	arguments := getCommandArgs()
+	filePath = arguments["configFile"]
 	homedir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal( err )
@@ -65,11 +69,18 @@ func chooseFromMenu (reader *bufio.Reader) int {
 }
 
 func main() {
+<<<<<<< Updated upstream
 	fmt.Println("Welcome to ssh config!")
 	file, err := os.Open(getFilePath(os.Args))
 	reader := bufio.NewReader(os.Stdin)
 	for err != nil {
 		file, err = promptPath(reader)
+=======
+	file, err := os.Open(getFilePath())
+ 
+	if err != nil {
+		log.Fatalf("failed opening file: %s", err)
+>>>>>>> Stashed changes
 	}
  
 	scanner := bufio.NewScanner(file)
