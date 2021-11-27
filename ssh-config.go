@@ -2,6 +2,7 @@ package main
  
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -10,19 +11,21 @@ import (
 	"strings"
 )
 
+func getCommandArgs() (configFile string) {
+	flag.StringVar(&configFile, "f", "$HOME/.ssh/config", "Specify config file. Default is $HOME/.ssh/config")
+	flag.Parse()
+	return
+}
+
 func getFilePath(args []string) (filePath string) {
 	// Return the SSH config file path
 	// TODO use argument parser
-	argLength := len(args[1:])
-	if argLength > 0 {
-		filePath = args[1]
-	} else {
-		homedir, err := os.UserHomeDir()
-		if err != nil {
-			log.Print(err)
-		}
-		filePath = filepath.Join(homedir,".ssh","config")
+	filePath = getCommandArgs()
+	homedir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal( err )
 	}
+	filePath = strings.Replace(filePath,"$HOME",homedir,1)
 	return
 }
 
