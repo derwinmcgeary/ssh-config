@@ -69,18 +69,11 @@ func chooseFromMenu (reader *bufio.Reader) int {
 }
 
 func main() {
-<<<<<<< Updated upstream
 	fmt.Println("Welcome to ssh config!")
-	file, err := os.Open(getFilePath(os.Args))
+	file, err := os.Open(getFilePath())
 	reader := bufio.NewReader(os.Stdin)
 	for err != nil {
 		file, err = promptPath(reader)
-=======
-	file, err := os.Open(getFilePath())
- 
-	if err != nil {
-		log.Fatalf("failed opening file: %s", err)
->>>>>>> Stashed changes
 	}
  
 	scanner := bufio.NewScanner(file)
